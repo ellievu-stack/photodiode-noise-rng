@@ -20,7 +20,7 @@ flowchart LR
   X --> N[Random numbers]
 ```
 
-Photons arrive at random times, so a steady photocurrent $I$ carries current noise $i_n = \sqrt{2qI\,\Delta f}$ (shot noise). The transimpedance stage turns it into a voltage, and the second stage amplifies the AC part by 301. The Pico samples that voltage, and the lowest bit of the difference between two consecutive samples is one random bit.
+Photons arrive at random times, so a steady photocurrent $I$ carries current noise $i_n = \sqrt{2qI\Delta f}$ (shot noise). The transimpedance stage turns it into a voltage, and the second stage amplifies the AC part by 301. The Pico samples that voltage, and the lowest bit of the difference between two consecutive samples is one random bit.
 
 ## Hardware
 
@@ -40,11 +40,11 @@ The light source matters. A capture taken before sunrise, when the only light wa
 
 ## Is it shot noise?
 
-Noise was measured as $\sigma = \operatorname{std}(x_i - x_{i-1})/\sqrt{2}$ over 2000 samples, which suppresses slow drift and mains hum. The expected output variance is
+Noise was measured as $\sigma = \mathrm{std}(x_i - x_{i-1})/\sqrt{2}$ over 2000 samples, which suppresses slow drift and mains hum. The expected output variance is
 
 $$\sigma^2 = \sigma_0^2 + G^2 R_f^2 \cdot 2qI \cdot \mathrm{ENBW}, \qquad I = V_{GP27}/R_f$$
 
-with $G = 301$, $R_f = 1\,\mathrm{M\Omega}$ and an effective noise bandwidth of about 9.3 kHz, which predicts a slope of about 270 mV² per volt of GP27.
+with $G = 301$, $R_f = 1$ MΩ and an effective noise bandwidth of about 9.3 kHz, which predicts a slope of about 270 mV² per volt of GP27.
 
 ![Noise variance versus photocurrent](figures/fig1_noise_vs_light.png)
 
@@ -58,7 +58,7 @@ with $G = 301$, $R_f = 1\,\mathrm{M\Omega}$ and an effective noise bandwidth of 
 | 1.40 / 1.43 | 12.3 | 10.9 |
 
 - **Dark floor:** about 4 mV (measured with a finger on the USB shield), close to the 3.7 mV expected from the thermal noise of Rf alone.
-- **Light dependence:** the variance rises roughly linearly with photocurrent (fit $19 + 70\,V$ mV², using the dark point and the three hands-off medians). A model where the variance grows with $V^2$, as flicker-type noise would, fits clearly worse.
+- **Light dependence:** the variance rises roughly linearly with photocurrent (fit $19 + 70V$ mV², using the dark point and the three hands-off medians). A model where the variance grows with $V^2$, as flicker-type noise would, fits clearly worse.
 - **Amplitude:** the fitted slope is about 26% of the ideal prediction. I could not explain the gap.
 - **Touching the board:** resting a finger on the Pico's USB shield removes most mains pickup, but the finger-on points at bright light sit about 30% above the hands-off fit in variance (about 13% in rms), so touching seems to add some noise of its own.
 - **Pickup:** hands off at low light, the noise was 71–91 mV at GP27 = 0.14 V and 19–48 mV at 0.19 V, versus 7 mV with a finger on the shield. The input node has high impedance and picks up the environment.
