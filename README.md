@@ -4,7 +4,7 @@ A breadboard experiment: amplify the current noise of a photodiode lit by steady
 
 The measured noise is **consistent with shot noise**, and the extracted bits pass the NIST SP 800-22 tests I ran. This is a learning project, not a certified or cryptographic random number generator. See [Limitations](#limitations).
 
-![Breadboard build](figures/Breadboard.jpg)
+![Breadboard build](figures/breadboard.jpg)
 
 ## How it works
 
